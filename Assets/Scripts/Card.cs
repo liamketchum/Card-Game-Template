@@ -8,9 +8,10 @@ public class Card : MonoBehaviour
 {
     public Card_data data;
 
-    public string card_name;
-    public string description;
-    public int health;
+    public string value;
+    public string value2;
+    public string suit;
+    public int rank;
     public int cost;
     public int damage;
     public Sprite sprite;
@@ -21,28 +22,43 @@ public class Card : MonoBehaviour
     public TextMeshProUGUI damageText;
     public Image spriteImage;
         
-
+    public GameManager gm;
     // Start is called before the first frame update
     void Start()
     {
-        card_name = data.card_name;
-        description = data.description;
-        health = data.health;
-        cost = data.cost;
-        damage = data.damage;
+        gm = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();gm = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();        value = data.value;
+        suit = data.suit;
+        rank = data.rank;
+        value2 = data.value2;
         sprite = data.sprite;
-        nameText.text = card_name;
-        descriptionText.text = description;
-        healthText.text = health.ToString();
+        nameText.text = value;
+        descriptionText.text = suit;
+        healthText.text = rank.ToString();
         costText.text = cost.ToString();
-        damageText.text = damage.ToString();
+        damageText.text = value2.ToString();
         spriteImage.sprite = sprite;
+
+        SetAceRank(gm.score);
 
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    
+    
+        public void SetAceRank(int score)
+        {
+            if (data.rank == 11) // Assuming rank 11 is Ace
+            {
+                if (score + 11 <= 21)
+                {
+                    rank = 11;
+                }
+                else
+                {
+                    rank = 1;
+                }
+                
+            }
+        }
+    
 }
